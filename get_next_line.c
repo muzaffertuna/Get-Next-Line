@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtoktas <mtoktas@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: maygen <maygen@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 19:59:05 by mtoktas           #+#    #+#             */
-/*   Updated: 2023/07/22 19:26:05 by mtoktas          ###   ########.fr       */
+/*   Updated: 2023/07/28 17:32:11 by maygen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*int main()
+int main()
 {
     int fd = open("tatil.txt", O_RDWR);
     char *first = get_next_line(fd);
@@ -118,4 +118,4 @@ char	*get_next_line(int fd)
     char *last = get_next_line(fd);
     printf("%s\n", last); 
     system("leaks a.out");
-}*/
+}
