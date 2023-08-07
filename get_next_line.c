@@ -6,7 +6,7 @@
 /*   By: mtoktas <mtoktas@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 19:59:05 by mtoktas           #+#    #+#             */
-/*   Updated: 2023/07/22 19:26:05 by mtoktas          ###   ########.fr       */
+/*   Updated: 2023/08/07 19:21:16 by mtoktas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*ft_line(char *str)
 		free(str);
 		return (NULL);
 	}
+	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
 	line = (char *)malloc(sizeof(char) * (i + 2));
@@ -68,13 +69,17 @@ char	*ft_line(char *str)
 char	*ft_read(char *str, int fd)
 {
 	int		f;
+	int		i;
 	char	*buf;
 
+	i = 0;
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	while (i < BUFFER_SIZE)
+		buf[i++] = 0;
 	if (!buf)
 		return (NULL);
 	f = 1;
-	while (f > 0)
+	while (f > 0 && !ft_strchr(buf, '\n'))
 	{
 		f = read(fd, buf, BUFFER_SIZE);
 		if (f == -1)
@@ -83,11 +88,8 @@ char	*ft_read(char *str, int fd)
 			free(str);
 			return (NULL);
 		}
+		buf[f] = '\0';
 		str = ft_strjoin(str, buf);
-		if (ft_strchr(buf, '\n'))
-		{
-			break ;
-		}
 	}
 	free(buf);
 	return (str);
@@ -101,21 +103,14 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	str = ft_read(str, fd);
-	if (!str)
+	if (!str || !*str)
+	{
+		if(str)
+			free(str);
+		str = NULL;
 		return (NULL);
+	}
 	line = ft_line(str);
 	str = ft_next(str);
 	return (line);
 }
-
-/*int main()
-{
-    int fd = open("tatil.txt", O_RDWR);
-    char *first = get_next_line(fd);
-    printf("%s\n", first);
-    char *second = get_next_line(fd);
-    printf("%s\n", second); 
-    char *last = get_next_line(fd);
-    printf("%s\n", last); 
-    system("leaks a.out");
-}*/
